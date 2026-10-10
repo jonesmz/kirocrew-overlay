@@ -1319,7 +1319,6 @@ RDEPEND="
 		>=dev-python/pyyaml-6[${PYTHON_USEDEP}]
 		>=dev-python/opentelemetry-api-1[${PYTHON_USEDEP}]
 		>=dev-python/opentelemetry-sdk-1[${PYTHON_USEDEP}]
-		>=dev-python/uv-0.6.7[${PYTHON_USEDEP}]
 		dev-python/pillow[${PYTHON_USEDEP}]
 		otlp? ( dev-python/opentelemetry-exporter-otlp-proto-http[${PYTHON_USEDEP}] )
 		teams? ( dev-python/pyjwt[${PYTHON_USEDEP}] )
@@ -1332,6 +1331,7 @@ RDEPEND="
 	')
 	whatsapp? ( dev-python/neonize )
 	perf? ( dev-util/py-spy )
+	>=dev-python/uv-0.6.7
 "
 DEPEND="${RDEPEND}"
 
