@@ -1261,7 +1261,7 @@ NPM_DEPS="
 	https://registry.npmjs.org/zwitch/-/zwitch-2.0.4.tgz zwitch+zwitch-2.0.4.tgz
 "
 
-inherit npm distutils-r1
+inherit npm distutils-r1 desktop xdg
 
 DESCRIPTION="Self-hosted persistent personal AI agent (CLI, dashboard, chat channels)"
 HOMEPAGE="https://github.com/kirodotdev/KiroCrew"
@@ -1373,6 +1373,29 @@ src_compile() {
 	fi
 
 	distutils-r1_src_compile
+}
+
+python_install_all() {
+	distutils-r1_python_install_all
+
+	# Desktop menu entry + icon, so KiroCrew appears in the application menu's
+	# Development ("Programming") section alongside other dev tools. KiroCrew is
+	# a gateway you reach through a web dashboard, so the launcher starts the
+	# gateway in a terminal; it prints the dashboard URL on startup.
+	local icon_src="${S}/src/kiro_crew/static/kirocrew-logo.png"
+	if [[ -f ${icon_src} ]]; then
+		# Install as a 256px hicolor icon named "kirocrew".
+		newicon -s 256 "${icon_src}" kirocrew.png
+	fi
+
+	# Terminal=true because `kirocrew gateway` is a long-running foreground
+	# process that logs to stdout (and prints the local dashboard URL).
+	make_desktop_entry \
+		"kirocrew gateway" \
+		"KiroCrew" \
+		"kirocrew" \
+		"Development" \
+		"Terminal=true"
 }
 
 pkg_postinst() {
