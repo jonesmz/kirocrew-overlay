@@ -23,7 +23,7 @@ S="${WORKDIR}/${MY_P}/exporter/${PN}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="amd64 arm64"
 
 RDEPEND="
 	>=dev-python/googleapis-common-protos-1.52[${PYTHON_USEDEP}]

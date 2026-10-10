@@ -46,7 +46,7 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="amd64 arm64"
 
 # Optional messaging channels / integrations mirror upstream's
 # [options.extras_require]. Core install stays lean; each flag pulls the

@@ -702,7 +702,7 @@ LICENSE+="
 	ISC MIT MPL-2.0 Unicode-3.0 Unlicense ZLIB
 "
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="amd64 arm64"
 
 BDEPEND="
 	>=dev-util/maturin-1[${PYTHON_USEDEP}]

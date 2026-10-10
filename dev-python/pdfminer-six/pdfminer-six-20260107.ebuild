@@ -21,7 +21,7 @@ HOMEPAGE="
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="amd64 arm64"
 
 # Upstream builds the version string with setuptools-scm from the VCS; feed it
 # the ebuild version so the sdist (which ships no .git) builds reproducibly.

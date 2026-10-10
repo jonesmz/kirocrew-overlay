@@ -27,7 +27,7 @@ SRC_URI="
 # BSD-3-Clause (Google/Chromium PDF engine).
 LICENSE="|| ( Apache-2.0 BSD ) BSD"
 SLOT="0"
-KEYWORDS="-* ~amd64 ~arm64"
+KEYWORDS="-* amd64 arm64"
 RESTRICT="bindist strip test"
 
 src_unpack() { :; }

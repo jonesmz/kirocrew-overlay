@@ -17,7 +17,7 @@ HOMEPAGE="
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="amd64 arm64"
 
 # The core package has no mandatory runtime dependencies: every entry in
 # upstream's requires_dist is gated behind the "optional" extra (aiohttp,
