@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>gentoo@jonesmz.com</email>
+		<name>Michael Jones</name>
+	</maintainer>
+	<longdescription>
+		KiroCrew is a self-hosted, persistent personal AI agent. You chat with
+		it from a web dashboard, the command line, or messaging channels such as
+		Slack and Discord, run multi-step tasks unattended, schedule cron jobs,
+		and it keeps memory across sessions. It drives an agent runtime
+		(kiro-cli) over the Agent Client Protocol.
+
+		Upstream is a setuptools project (pip name "kirocrew", import package
+		"kiro_crew") that is not published on PyPI, so this ebuild builds from
+		the GitHub source. The wheel bundles a Vite/React dashboard, which the
+		ebuild compiles with npm at merge time and stages into the package.
+	</longdescription>
+	<use>
+		<flag name="otlp">Enable OTLP/HTTP metrics egress via
+			dev-python/opentelemetry-exporter-otlp-proto-http (export still
+			requires an explicit telemetry endpoint in config)</flag>
+		<flag name="perf">Install dev-util/py-spy for out-of-process profiling
+			of a running gateway (kirocrew perf sample --pid)</flag>
+		<flag name="teams">Enable the Microsoft Teams channel (pulls PyJWT with
+			crypto for inbound Bot Framework JWT validation)</flag>
+		<flag name="whatsapp">Enable the WhatsApp channel via dev-python/neonize
+			(bundles the Go whatsmeow core)</flag>
+		<flag name="feishu">Enable the Feishu (Lark) channel via
+			dev-python/lark-oapi</flag>
+		<flag name="voice">Enable speech-to-text (local whisper.cpp via
+			pywhispercpp, plus AWS Transcribe via boto3/amazon-transcribe)</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">kirodotdev/KiroCrew</remote-id>
+		<bugs-to>https://github.com/kirodotdev/KiroCrew/issues</bugs-to>
+	</upstream>
+</pkgmetadata>
