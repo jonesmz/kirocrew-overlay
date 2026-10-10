@@ -4,8 +4,6 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-# Capped at 3.13: pdfplumber hard-depends on dev-python/pypdfium2, which is a
-# prebuilt py3-none wheel this overlay keeps at python3_11..13.
 PYTHON_COMPAT=( python3_{11..14} )
 
 inherit distutils-r1 pypi
@@ -20,8 +18,10 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="amd64 arm64"
 
+# pdfminer.six is packaged in ::gentoo as app-text/pdfminer (same upstream,
+# same PyPI id). pdfplumber pins pdfminer.six==20260107.
 RDEPEND="
-	~dev-python/pdfminer-six-20260107[${PYTHON_USEDEP}]
+	~app-text/pdfminer-20260107[${PYTHON_USEDEP}]
 	>=dev-python/pillow-12.2.0[${PYTHON_USEDEP}]
 	>=dev-python/pypdfium2-5.9.0[${PYTHON_USEDEP}]
 "

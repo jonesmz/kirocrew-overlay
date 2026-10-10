@@ -26,15 +26,28 @@ The ebuild keeps the core install lean and gates the optional messaging /
 media integrations behind USE flags, mirroring KiroCrew's `extras_require`.
 See `app-misc/kirocrew/metadata.xml` for the full list.
 
-## Caveats
+## Dependencies
 
-A handful of KiroCrew's runtime dependencies are not in `::gentoo`
-(for example `dev-python/cron-descriptor`, `dev-python/slack-sdk`,
-`dev-python/snowballstemmer`, and `dev-util/uv`). Where no tree package
-exists, the ebuild documents the gap inline. You may need additional overlays
-(e.g. `::guru`) or local ebuilds for those before `kirocrew` will install
-cleanly. Treat this ebuild as a working starting point rather than a
-tree-ready, fully-dependency-resolved package.
+Every KiroCrew runtime dependency resolves against `::gentoo` plus this
+overlay. The ones not in the tree are packaged here:
+
+- `dev-python/slack-sdk`, `cron-descriptor`, `python-docx`, `linkpreview`
+- `dev-python/pdfplumber` (+ `pypdfium2`; pdfminer.six is the tree's
+  `app-text/pdfminer`)
+- `dev-python/lark-oapi` (feishu), `amazon-transcribe` + `pywhispercpp`
+  (voice), `neonize` (whatsapp)
+- `dev-python/opentelemetry-proto`,
+  `opentelemetry-exporter-otlp-proto-{common,http}` (otlp)
+
+`uv` is **not** shipped here — it is already in the tree as
+`dev-python/uv`. `neonize` and `pypdfium2` install upstream prebuilt
+wheels (they bundle a Go / PDFium shared library with no practical source
+build); everything else builds from source.
+
+Only `kirocrew` and its always-pulled chain are keyworded stable. The
+optional `voice`, `whatsapp`, and `perf` flags pull dependencies that are
+`~arch` (they track `~arch` tree packages such as `dev-util/py-spy`), so
+enabling one needs the matching `package.accept_keywords` entry.
 
 ## Enabling the overlay
 

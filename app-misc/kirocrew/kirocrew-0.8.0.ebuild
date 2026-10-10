@@ -1293,7 +1293,7 @@ IUSE="otlp perf teams whatsapp feishu voice"
 # entries (truststore/darwin, tzdata/tzlocal/pywinpty/Windows,
 # pysqlite3-binary/linux-x86_64) are omitted: they are no-ops or source-provided
 # on a Linux Gentoo system. Every dependency below is provided either by
-# ::gentoo or by this overlay (see dev-python/* and dev-util/uv here).
+# ::gentoo (including dev-python/uv) or by this overlay (see dev-python/*).
 RDEPEND="
 	$(python_gen_cond_dep '
 		>=dev-python/aiohttp-3.9[${PYTHON_USEDEP}]
@@ -1319,7 +1319,7 @@ RDEPEND="
 		>=dev-python/pyyaml-6[${PYTHON_USEDEP}]
 		>=dev-python/opentelemetry-api-1[${PYTHON_USEDEP}]
 		>=dev-python/opentelemetry-sdk-1[${PYTHON_USEDEP}]
-		>=dev-util/uv-0.6.7[${PYTHON_USEDEP}]
+		>=dev-python/uv-0.6.7[${PYTHON_USEDEP}]
 		dev-python/pillow[${PYTHON_USEDEP}]
 		otlp? ( dev-python/opentelemetry-exporter-otlp-proto-http[${PYTHON_USEDEP}] )
 		teams? ( dev-python/pyjwt[${PYTHON_USEDEP}] )
