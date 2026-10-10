@@ -1358,12 +1358,18 @@ src_compile() {
 		npm_run build
 		popd >/dev/null || die
 
-		# Stage the built dashboard into the Python package tree. Uses the
-		# first configured interpreter; the staged assets are pure data shared
-		# by every python_compile pass.
-		local stage_py="${EPYTHON:-python3}"
-		"${stage_py}" -m kiro_crew.frontend stage . \
-			|| die "frontend stage step failed"
+		# "Stage" the built dashboard into the Python package tree. Upstream's
+		# `kiro_crew.frontend stage` is just a copy of website/dist ->
+		# src/kiro_crew/static/dist (plus a best-effort git-rev fingerprint).
+		# We do the copy directly rather than run `python -m kiro_crew.frontend`,
+		# which would require importing the not-yet-installed kiro_crew package
+		# (and all its runtime deps) during the compile phase.
+		[[ -f website/dist/index.html ]] \
+			|| die "dashboard build produced no website/dist/index.html"
+		local static_dist="src/kiro_crew/static/dist"
+		rm -rf "${static_dist}" || die
+		mkdir -p "$(dirname "${static_dist}")" || die
+		cp -r website/dist "${static_dist}" || die "staging dashboard failed"
 	fi
 
 	distutils-r1_src_compile
