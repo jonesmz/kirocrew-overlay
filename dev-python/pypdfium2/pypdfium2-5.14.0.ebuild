@@ -9,7 +9,7 @@ EAPI=8
 # that bundle the PDFium shared library; the Python half is a py3-none
 # (ABI-independent) ctypes wrapper, so one glibc wheel per arch serves 3.11-3.13.
 DISTUTILS_USE_PEP517=standalone
-PYTHON_COMPAT=( python3_{11..13} )
+PYTHON_COMPAT=( python3_{11..14} )
 
 inherit distutils-r1
 

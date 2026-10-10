@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
 # Upstream declares requires-python >=3.12 and only tests/ships 3.12-3.13.
-PYTHON_COMPAT=( python3_{12..13} )
+PYTHON_COMPAT=( python3_{12..14} )
 
 # npm.eclass supplies the offline dashboard build (NPM_DEPS -> NPM_SRC_URI,
 # npm_ci, npm_run). NPM_DEPS is a PRE_INHERIT variable, so it must be set

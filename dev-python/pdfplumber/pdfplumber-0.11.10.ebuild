@@ -6,7 +6,7 @@ EAPI=8
 DISTUTILS_USE_PEP517=setuptools
 # Capped at 3.13: pdfplumber hard-depends on dev-python/pypdfium2, which is a
 # prebuilt py3-none wheel this overlay keeps at python3_11..13.
-PYTHON_COMPAT=( python3_{11..13} )
+PYTHON_COMPAT=( python3_{11..14} )
 
 inherit distutils-r1 pypi
 

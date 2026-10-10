@@ -9,7 +9,7 @@ EAPI=8
 # wheel is tagged py310-none-manylinux (Python-ABI-independent — it is a pure
 # ctypes wrapper around the .so), so one wheel per arch serves 3.11-3.13.
 DISTUTILS_USE_PEP517=standalone
-PYTHON_COMPAT=( python3_{11..13} )
+PYTHON_COMPAT=( python3_{11..14} )
 
 inherit distutils-r1
 
