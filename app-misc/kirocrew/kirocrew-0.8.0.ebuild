@@ -1261,7 +1261,7 @@ NPM_DEPS="
 	https://registry.npmjs.org/zwitch/-/zwitch-2.0.4.tgz zwitch+zwitch-2.0.4.tgz
 "
 
-inherit npm distutils-r1 desktop xdg
+inherit npm distutils-r1
 
 DESCRIPTION="Self-hosted persistent personal AI agent (CLI, dashboard, chat channels)"
 HOMEPAGE="https://github.com/kirodotdev/KiroCrew"
@@ -1332,6 +1332,7 @@ RDEPEND="
 	whatsapp? ( dev-python/neonize )
 	perf? ( dev-util/py-spy )
 	>=dev-python/uv-0.6.7
+	dev-util/kiro-cli-bin
 "
 DEPEND="${RDEPEND}"
 
@@ -1375,36 +1376,15 @@ src_compile() {
 	distutils-r1_src_compile
 }
 
-python_install_all() {
-	distutils-r1_python_install_all
-
-	# Desktop menu entry + icon, so KiroCrew appears in the application menu's
-	# Development ("Programming") section alongside other dev tools. KiroCrew is
-	# a gateway you reach through a web dashboard, so the launcher starts the
-	# gateway in a terminal; it prints the dashboard URL on startup.
-	local icon_src="${S}/src/kiro_crew/static/kirocrew-logo.png"
-	if [[ -f ${icon_src} ]]; then
-		# Upstream logo is 512x512, so install it into the matching hicolor
-		# size bucket. The icon theme spec rejects a file whose real dimensions
-		# don't match its directory, so an under/over-sized -s would make the
-		# menu fall back to a generic icon.
-		newicon -s 512 "${icon_src}" kirocrew.png
-	fi
-
-	# Terminal=true because `kirocrew gateway` is a long-running foreground
-	# process that logs to stdout (and prints the local dashboard URL).
-	make_desktop_entry \
-		"kirocrew gateway" \
-		"KiroCrew" \
-		"kirocrew" \
-		"Development" \
-		"Terminal=true"
-}
-
 pkg_postinst() {
 	elog "Start the gateway (dashboard + channels + task runner) with:"
 	elog "  kirocrew gateway"
 	elog
 	elog "First-run setup and configuration live under ~/.kiro/ by default."
 	elog "See https://github.com/kirodotdev/KiroCrew/blob/main/docs/guides/install.md"
+	elog
+	elog
+	elog "KiroCrew drives the agent runtime 'kiro-cli' (pulled in via"
+	elog "dev-util/kiro-cli-bin). Sign in once with 'kiro-cli' before first use;"
+	elog "until it is authenticated, chat sessions fail to spawn."
 }

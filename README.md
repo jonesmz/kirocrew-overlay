@@ -44,6 +44,11 @@ overlay. The ones not in the tree are packaged here:
 wheels (they bundle a Go / PDFium shared library with no practical source
 build); everything else builds from source.
 
+KiroCrew drives the proprietary `kiro-cli` agent runtime, pulled in as
+`dev-util/kiro-cli-bin`. That package lives in the **stowe-verlay**
+overlay, not `::gentoo` and not here, so enable that overlay too (or
+provide your own `dev-util/kiro-cli-bin`) for the dependency to resolve.
+
 Only `kirocrew` and its always-pulled chain are keyworded stable. The
 optional `voice`, `whatsapp`, and `perf` flags pull dependencies that are
 `~arch` (they track `~arch` tree packages such as `dev-util/py-spy`), so
