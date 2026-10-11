@@ -1384,8 +1384,11 @@ python_install_all() {
 	# gateway in a terminal; it prints the dashboard URL on startup.
 	local icon_src="${S}/src/kiro_crew/static/kirocrew-logo.png"
 	if [[ -f ${icon_src} ]]; then
-		# Install as a 256px hicolor icon named "kirocrew".
-		newicon -s 256 "${icon_src}" kirocrew.png
+		# Upstream logo is 512x512, so install it into the matching hicolor
+		# size bucket. The icon theme spec rejects a file whose real dimensions
+		# don't match its directory, so an under/over-sized -s would make the
+		# menu fall back to a generic icon.
+		newicon -s 512 "${icon_src}" kirocrew.png
 	fi
 
 	# Terminal=true because `kirocrew gateway` is a long-running foreground
