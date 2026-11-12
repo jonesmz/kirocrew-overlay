@@ -18,6 +18,8 @@
 		ebuild compiles with npm at merge time and stages into the package.
 	</longdescription>
 	<use>
+		<flag name="bedrock">Enable the Amazon Bedrock Knowledge Base retrieval
+			source via dev-python/boto3</flag>
 		<flag name="otlp">Enable OTLP/HTTP metrics egress via
 			dev-python/opentelemetry-exporter-otlp-proto-http (export still
 			requires an explicit telemetry endpoint in config)</flag>
