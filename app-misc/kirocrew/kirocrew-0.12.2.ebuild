@@ -1401,6 +1401,8 @@ src_install() {
 	distutils-r1_src_install
 
 	systemd_dounit "${FILESDIR}/kirocrew.service"
+	insinto /etc/kirocrew
+	doins "${FILESDIR}/kirocrew.env"
 }
 pkg_postinst() {
 	elog "Start the gateway (dashboard + channels + task runner) with:"
