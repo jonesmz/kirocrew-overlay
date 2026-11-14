@@ -10,6 +10,10 @@ StartLimitIntervalSec=300
 Type=simple
 User=kirocrew
 Group=kirocrew
+# Open a PAM session so pam_systemd registers a logind session: that starts
+# user@<uid>.service and sets XDG_RUNTIME_DIR, which the gateway needs for
+# per-agent cgroup scopes (systemd-run --user --scope).
+PAMName=login
 WorkingDirectory=/var/lib/kirocrew
 ExecStart=/usr/bin/kirocrew gateway --no-open
 # The gateway exits cleanly on purpose to be relaunched (e.g. after a package
