@@ -20,6 +20,9 @@
 	<use>
 		<flag name="bedrock">Enable the Amazon Bedrock Knowledge Base retrieval
 			source via dev-python/boto3</flag>
+		<flag name="kiro-cli">Pull in the proprietary dev-util/kiro-cli-bin (default
+			ACP backend). Needs the Kiro license accepted; leave off to use another
+			ACP harness or a kiro-cli you installed yourself</flag>
 		<flag name="otlp">Enable OTLP/HTTP metrics egress via
 			dev-python/opentelemetry-exporter-otlp-proto-http (export still
 			requires an explicit telemetry endpoint in config)</flag>

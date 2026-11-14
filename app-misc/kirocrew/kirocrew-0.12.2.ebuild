@@ -1284,14 +1284,18 @@ SRC_URI="
 "
 S="${WORKDIR}/${MY_PN}-${PV}"
 
-LICENSE="Apache-2.0"
+# Covers only the upstream source tarball: KiroCrew itself (Apache-2.0), the
+# vendored src/kiro_crew/_vendor/llama_cpp and living-ui notes (MIT), and the
+# bundled OpenDyslexic font (OFL-1.1). Dependencies (npm, Python,
+# kiro-cli-bin) are not listed.
+LICENSE="Apache-2.0 MIT OFL-1.1"
 SLOT="0"
 KEYWORDS="amd64 arm64"
 
 # Optional messaging channels / integrations mirror upstream's
 # [options.extras_require]. Core install stays lean; each flag pulls the
 # distributions that extra documents. See metadata.xml.
-IUSE="bedrock otlp perf teams whatsapp feishu voice"
+IUSE="bedrock kiro-cli otlp perf teams whatsapp feishu voice"
 
 # net-libs/nodejs is pulled in by npm.eclass via NPM_NODE_MIN.
 
@@ -1348,7 +1352,7 @@ RDEPEND="
 	perf? ( dev-util/py-spy )
 	>=sys-libs/timezone-data-2026b
 	>=dev-python/uv-0.6.7
-	dev-util/kiro-cli-bin
+	kiro-cli? ( dev-util/kiro-cli-bin )
 "
 DEPEND="${RDEPEND}"
 
@@ -1400,7 +1404,13 @@ pkg_postinst() {
 	elog "See https://github.com/kirodotdev/KiroCrew/blob/main/docs/guides/install.md"
 	elog
 	elog
-	elog "KiroCrew drives the agent runtime 'kiro-cli' (pulled in via"
-	elog "dev-util/kiro-cli-bin). Sign in once with 'kiro-cli' before first use;"
-	elog "until it is authenticated, chat sessions fail to spawn."
+	if use kiro-cli; then
+		elog "The default ACP backend 'kiro-cli' was installed via"
+		elog "dev-util/kiro-cli-bin. Sign in once with 'kiro-cli login' before first"
+		elog "use; until it is authenticated, chat sessions fail to spawn."
+	else
+		elog "The 'kiro-cli' USE flag is disabled, so dev-util/kiro-cli-bin was not"
+		elog "installed. Install and sign in to kiro-cli yourself to use the default"
+		elog "backend, or configure another ACP harness (see the install guide)."
+	fi
 }
