@@ -1267,7 +1267,7 @@ NPM_DEPS="
 	https://registry.npmjs.org/zwitch/-/zwitch-2.0.4.tgz zwitch+zwitch-2.0.4.tgz
 "
 
-inherit npm distutils-r1
+inherit npm distutils-r1 systemd
 
 DESCRIPTION="Self-hosted persistent personal AI agent (CLI, dashboard, chat channels)"
 HOMEPAGE="https://github.com/kirodotdev/KiroCrew"
@@ -1352,6 +1352,7 @@ RDEPEND="
 	perf? ( dev-util/py-spy )
 	>=sys-libs/timezone-data-2026b
 	>=dev-python/uv-0.6.7
+	acct-user/kirocrew
 	kiro-cli? ( dev-util/kiro-cli-bin )
 "
 DEPEND="${RDEPEND}"
@@ -1396,6 +1397,11 @@ src_compile() {
 	distutils-r1_src_compile
 }
 
+src_install() {
+	distutils-r1_src_install
+
+	systemd_dounit "${FILESDIR}/kirocrew.service"
+}
 pkg_postinst() {
 	elog "Start the gateway (dashboard + channels + task runner) with:"
 	elog "  kirocrew gateway"
@@ -1403,14 +1409,8 @@ pkg_postinst() {
 	elog "First-run setup and configuration live under ~/.kiro/ by default."
 	elog "See https://github.com/kirodotdev/KiroCrew/blob/main/docs/guides/install.md"
 	elog
-	elog
-	if use kiro-cli; then
-		elog "The default ACP backend 'kiro-cli' was installed via"
-		elog "dev-util/kiro-cli-bin. Sign in once with 'kiro-cli login' before first"
-		elog "use; until it is authenticated, chat sessions fail to spawn."
-	else
-		elog "The 'kiro-cli' USE flag is disabled, so dev-util/kiro-cli-bin was not"
-		elog "installed. Install and sign in to kiro-cli yourself to use the default"
-		elog "backend, or configure another ACP harness (see the install guide)."
-	fi
+	elog "A systemd unit is installed. It runs the gateway as the 'kirocrew' user,"
+	elog "whose home (and ~/.kiro state) is /var/lib/kirocrew:"
+	elog "  systemctl enable --now kirocrew"
+	elog "Optional overrides (e.g. KIROCREW_PORT) go in /etc/kirocrew/kirocrew.env."
 }

@@ -1,0 +1,30 @@
+[Unit]
+Description=Kiro Crew gateway (dashboard + channels + cron)
+Documentation=https://github.com/kirodotdev/KiroCrew
+After=network-online.target
+Wants=network-online.target
+StartLimitBurst=3
+StartLimitIntervalSec=300
+
+[Service]
+Type=simple
+User=kirocrew
+Group=kirocrew
+WorkingDirectory=/var/lib/kirocrew
+ExecStart=/usr/bin/kirocrew gateway --no-open
+# The gateway exits cleanly on purpose to be relaunched (e.g. after a package
+# update), so restart on every exit. An explicit `systemctl stop` is honoured.
+Restart=always
+RestartSec=10
+# Exit code 78: another gateway already holds this home. Do not retry.
+RestartPreventExitStatus=78
+TimeoutStopSec=20
+LimitNOFILE=65536
+LimitCORE=0
+Environment=LANG=C.UTF-8
+Environment=LC_ALL=C.UTF-8
+# Optional overrides, e.g. KIROCREW_PORT=5477
+EnvironmentFile=-/etc/kirocrew/kirocrew.env
+
+[Install]
+WantedBy=multi-user.target
